@@ -1,7 +1,7 @@
 """
 Represents a player object on the server side
 """
-from .game import Game
+from game import Game
 
 
 class Player(object):
@@ -43,9 +43,9 @@ class Player(object):
     def disconnect(self):
         """
         call to disconnect player
-        :return:
+        :return: Nones
         """
-        pass
+        self.game.player_disconnected(self)
 
     def get_ip(self):
         """
