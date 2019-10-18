@@ -2,6 +2,7 @@
 Represents and stores information about the chat
 """
 
+
 class Chat(object):
 
     def __init__(self, r):

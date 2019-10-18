@@ -4,7 +4,7 @@ Stores the state of the drawing board.
 
 
 class Board(object):
-    ROWS = COLS = 720
+    ROWS = COLS = 90
 
     def __init__(self):
         """
@@ -20,7 +20,15 @@ class Board(object):
         :param color: 0-8
         :return:
         """
-        self.data[y][x] = color
+        neighs = [(x, y)] + self.get_neighbour(x, y)
+        for x, y in neighs:
+            if 0 <= x <= self.COLS and 0 <= y <= self.ROWS:
+                self.data[y][x] = color
+
+    def get_neighbour(self,x,y):
+        return [ (x-1, y-1), (x, y-1), (x+1, y-1),
+                 (x-1, y), (x+1, y),
+                 (x-1, y+1), (x, y+1), (x+1, y+1)]
 
     def clear(self):
         """
