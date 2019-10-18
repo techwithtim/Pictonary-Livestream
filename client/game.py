@@ -61,10 +61,8 @@ class Game:
         mouse = pygame.mouse.get_pos()
 
         # Check click on skip button
-        if self.skip_button.click(*mouse):
-            print("Clicked skip button")
+        if self.skip_button.click(*mouse) and not self.drawing:
             skips = self.connection.send({1:[]})
-            print("Skips:", skips)
 
         clicked_board = self.board.click(*mouse)
 
@@ -81,8 +79,9 @@ class Game:
             try:
                 # get board
                 response = self.connection.send({3:[]})
-                self.board.compressed_board = response
-                self.board.translate_board()
+                if response:
+                    self.board.compressed_board = response
+                    self.board.translate_board()
 
                 # get time
                 response = self.connection.send({9:[]})
@@ -92,12 +91,12 @@ class Game:
                 response = self.connection.send({2:[]})
                 self.chat.update_chat(response)
 
-                # get round word
-                if not self.top_bar.word:
-                    self.top_bar.word = self.connection.send({6:[]})
-                    self.top_bar.round = self.connection.send({5:[]})
-                    self.drawing = self.connection.send({11:[]})
-                    #self.top_bar.max_round(len(self.players))
+                # get round info
+                self.top_bar.word = self.connection.send({6:[]})
+                self.top_bar.round = self.connection.send({5:[]})
+                self.drawing = self.connection.send({11:[]})
+                self.top_bar.drawing = self.drawing
+                self.top_bar.max_round = len(self.players)
 
                 # get player updates
                 '''response = self.connection.send({0:[]})
@@ -120,16 +119,17 @@ class Game:
                     self.bottom_bar.button_events()
 
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_RETURN:
-                        self.connection.send({0:[self.chat.typing]})
-                        self.chat.typing = ""
-                    else:
-                        # gets the key name
-                        key_name = pygame.key.name(event.key)
+                    if not self.drawing:
+                        if event.key == pygame.K_RETURN:
+                            self.connection.send({0:[self.chat.typing]})
+                            self.chat.typing = ""
+                        else:
+                            # gets the key name
+                            key_name = pygame.key.name(event.key)
 
-                        # converts to uppercase the key name
-                        key_name = key_name.lower()
-                        self.chat.type(key_name)
+                            # converts to uppercase the key name
+                            key_name = key_name.lower()
+                            self.chat.type(key_name)
 
         pygame.quit()
 

@@ -36,6 +36,7 @@ class Server(object):
 
                 keys = [int(key) for key in data.keys()]
                 send_msg = {key:[] for key in keys}
+                last_board = None
 
                 for key in keys:
                     if key == -1:  # get game, returns a list of players
@@ -57,7 +58,10 @@ class Server(object):
                             send_msg[2] = content
                         elif key == 3:  # get board
                             brd = player.game.board.get_board()
-                            send_msg[3] = brd
+                            if last_board != brd:
+                                last_board = brd
+                                send_msg[3] = brd
+
                         elif key == 4:  # get score
                             scores = player.game.get_player_scores()
                             send_msg[4] = scores

@@ -74,7 +74,7 @@ class Round(object):
         :param wrd: str
         :return: bool
         """
-        correct = wrd == self.word
+        correct = wrd.lower() == self.word.lower()
         if correct:
             self.player_guessed.append(player)
             # TODO implement scoring system here
