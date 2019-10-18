@@ -69,7 +69,13 @@ class Game:
                     self.check_clicks()
                     self.bottom_bar.button_events()
 
+                if event.type == pygame.KEYDOWN:
+                    # gets the key name
+                    key_name = pygame.key.name(event.key)
 
+                    # converts to uppercase the key name
+                    key_name = key_name.lower()
+                    self.chat.type(key_name)
 
         pygame.quit()
 
