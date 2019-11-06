@@ -30,8 +30,7 @@ class Game(object):
         :return: None
         """
         try:
-            round_word = self.get_word()
-            self.round = Round(round_word, self.players[self.player_draw_ind], self)
+            self.round = Round(self.get_word(), self.players[self.player_draw_ind], self)
             self.round_count += 1
 
             if self.player_draw_ind >= len(self.players):
@@ -136,8 +135,8 @@ class Game(object):
                 if wrd not in self.words_used:
                     words.append(wrd)
 
-            self.words_used.add(wrd)
+        wrd = random.choice(words)
+        self.words_used.add(wrd)
 
-            r = random.randint(0, len(words)-1)
-            return words[r].strip()
+        return wrd 
 
