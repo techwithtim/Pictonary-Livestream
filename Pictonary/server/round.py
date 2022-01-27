@@ -102,4 +102,3 @@ class Round(object):
             if player in self.player_scores:
                 player.update_score(self.player_scores[player])
         self.game.round_ended()
-

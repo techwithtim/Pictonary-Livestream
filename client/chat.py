@@ -45,4 +45,3 @@ class Chat:
 
         if len(self.typing) >= 25:
             self.typing = self.typing[:25]
-
