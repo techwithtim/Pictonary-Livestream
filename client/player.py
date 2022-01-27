@@ -16,4 +16,3 @@ class Player(object):
 
     def get_name(self):
         return self.name
-

@@ -144,4 +144,3 @@ class Game(object):
 
             r = random.randint(0, len(words)-1)
             return words[r].strip()
-
